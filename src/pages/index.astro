@@ -1,7 +1,117 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
 ---
-<Layout>
-    <Hero />
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('heroCarousel', () => ({
+            activeSlide: 0,
+            typedText: '',
+            slides: [
+                { title: 'jaket custom mewah?', desc: 'Eksklusif dengan bahan wool, desainer profesional, dan jahitan presisi tinggi.', img: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=800' },
+                { title: 'hoodie & sweater streetwear?', desc: 'Kain fleece tebal premium, lembut di kulit, dan tahan lama.', img: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800' },
+                { title: 'seragam PDH kantor & instansi?', desc: 'Tampil profesional, rapi, dan berwibawa untuk tim perusahaan Anda.', img: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=800' },
+                { title: 'kaos distro high-grade?', desc: 'Cotton combed 24s/30s reaktif, sablon plastisol / DTF tahan cuci.', img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800' },
+                { title: 'jas almamater kampus?', desc: 'Bahan drill pilihan dengan furing dalam dan bordir computer rapat.', img: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800' },
+                { title: 'polo shirt polo bordir?', desc: 'Lacoste pique premium, adem, sangat cocok untuk event & promosi.', img: 'https://images.unsplash.com/photo-1625910513418-7c471887e452?auto=format&fit=crop&q=80&w=800' }
+            ],
+            init() {
+                this.startTyping();
+                setInterval(() => {
+                    this.activeSlide = (this.activeSlide + 1) % this.slides.length;
+                    this.startTyping();
+                }, 3000);
+            },
+            startTyping() {
+                let target = 'Mau buat ' + this.slides[this.activeSlide].title;
+                this.typedText = '';
+                let i = 0;
+                let timer = setInterval(() => {
+                    if (i < target.length) {
+                        this.typedText += target.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(timer);
+                    }
+                }, 40);
+            }
+        }));
+    });
+</script>
+
+<Layout title="Beranda — Pusat Konveksi & Garment Luxury">
+    <!-- Hero Section -->
+    <section class="relative min-h-[90vh] flex flex-col justify-between bg-white px-6 py-8 md:py-16 overflow-hidden" x-data="heroCarousel">
+        <div class="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto">
+            
+            <!-- Left: Content & Typing Title -->
+            <div class="lg:col-span-6 flex flex-col items-start order-1">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-luxury-100 border border-luxury-200 text-xs font-semibold uppercase tracking-wider mb-6">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Workshop Konveksi Terstandarisasi Butik
+                </div>
+
+                <!-- Dynamic Typewriter Title -->
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif tracking-tight text-luxury-900 mb-6 leading-[1.1] min-h-[140px] sm:min-h-[160px]">
+                    <span x-text="typedText"></span><span class="inline-block w-1 h-8 sm:h-12 bg-luxury-900 ml-1 animate-ping"></span>
+                </h1>
+
+                <!-- Static Subtitle -->
+                <p class="text-base sm:text-lg text-luxury-800 font-light mb-8 leading-relaxed max-w-xl" x-text="slides[activeSlide].desc"></p>
+
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+                    <a href="https://wa.me/6281234567890" target="_blank" class="px-8 py-4 bg-luxury-900 text-white font-medium rounded-full hover:bg-black transition text-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        Konsultasi via WhatsApp
+                    </a>
+                    <a href="/katalog" class="px-8 py-4 bg-luxury-100 text-luxury-900 font-medium rounded-full hover:bg-luxury-200 transition text-center border border-luxury-200">
+                        Jelajahi 20 Katalog Produk
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: Carousel with Edge Blur Gradient -->
+            <div class="lg:col-span-6 relative flex items-center justify-center order-2">
+                <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none"></div>
+                <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none"></div>
+
+                <div class="relative w-full h-[350px] sm:h-[450px] flex items-center justify-center overflow-hidden">
+                    <template x-for="(slide, index) in slides" :key="index">
+                        <div x-show="activeSlide === index"
+                             x-transition:enter="transition ease-out duration-700"
+                             x-transition:enter-start="opacity-0 scale-95 translate-x-10"
+                             x-transition:enter-end="opacity-100 scale-100 translate-x-0"
+                             x-transition:leave="transition ease-in duration-500"
+                             x-transition:leave-start="opacity-100 scale-100 translate-x-0"
+                             x-transition:leave-end="opacity-0 scale-95 -translate-x-10"
+                             class="absolute inset-0 flex items-center justify-center">
+                            <img :src="slide.img" :alt="slide.title" class="max-h-[350px] sm:max-h-[420px] w-auto object-contain drop-shadow-2xl mix-blend-multiply">
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Company Highlights & Stats -->
+    <section class="py-20 bg-luxury-100 border-t border-luxury-200">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="p-6 bg-white rounded-2xl shadow-sm">
+                <div class="text-4xl font-serif mb-2">12+</div>
+                <div class="text-sm text-luxury-800 font-medium">Tahun Pengalaman</div>
+            </div>
+            <div class="p-6 bg-white rounded-2xl shadow-sm">
+                <div class="text-4xl font-serif mb-2">1.500+</div>
+                <div class="text-sm text-luxury-800 font-medium">Brand & Instansi Klien</div>
+            </div>
+            <div class="p-6 bg-white rounded-2xl shadow-sm">
+                <div class="text-4xl font-serif mb-2">50.000+</div>
+                <div class="text-sm text-luxury-800 font-medium">Pcs Produksi Per Bulan</div>
+            </div>
+            <div class="p-6 bg-white rounded-2xl shadow-sm">
+                <div class="text-4xl font-serif mb-2">100%</div>
+                <div class="text-sm text-luxury-800 font-medium">Garansi Ketepatan Mutu</div>
+            </div>
+        </div>
+    </section>
 </Layout>

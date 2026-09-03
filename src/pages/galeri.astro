@@ -1,8 +1,62 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// 10 Testimoni Klien
+const testimonials = [
+    { name: 'Rian Pratama', role: 'Founder & CEO, Bandung Streetwear', text: 'Puas banget bikin 500 pcs varsity jacket di Konveksi Nusantara. Jahitannya rapi setara brand mall, dan tepat waktu!' },
+    { name: 'Siti Rahma, M.Pd', role: 'Ketua Panitia Dies Natalis Universitas', text: 'Almamater dan toga wisuda selesai 1.200 pcs tanpa cacat. Kualitas kain drill-nya sangat nyaman dipakai mahasiswa.' },
+    { name: 'Capt. Aris Munandar', role: 'Operational Manager, Logistics Corp', text: 'Seragam PDH dan jaket lapangan tim operasional kami terlihat sangat elegan dan profesional. Recommended konveksi!' },
+    { name: 'Dimas Anggara', role: 'Komunitas Motor Max Owner', text: 'Hoodie klub motor kami dicetak dengan sablon DTF super tajam. Dicuci berkali-kali gak luntur sama sekali.' },
+    { name: 'Dr. Hendra Kusuma', role: 'Direktur RS Swasta', text: 'Jas medis dan seragam perawat dipesan dalam jumlah besar dan semuanya pas di badan staff kami.' },
+    { name: 'Jessica Aurelia', role: 'Event Organizer Chief', text: 'Polo shirt event pameran internasional kami dikerjakan kilat 4 hari jadi dengan bordir logo sangat presisi.' },
+    { name: 'Budi Santoso', role: 'HRD Manufaktur Otomotif', text: 'Sudah 3 tahun langganan buat seragam tahunan karyawan di sini. Pelayanan sangat kooperatif dan jujur.' },
+    { name: 'Nabilah Fitri', role: 'Owner Hijab Brand', text: 'Partner konveksi terbaik untuk produksi gamis dan tunik brand saya. Cutting-nya rapi dan sesuai spec.' },
+    { name: 'Eko Prasetyo', role: 'Ketua BEM Fakultas Teknik', text: 'Jaket angkatan teknik kami modelnya kekinian, bahan fleece tebal hangat tapi gak bikin gerah.' },
+    { name: 'Maya Sari', role: 'Manager Cafe & Resto', text: 'Apron dan kemeja barista kami kelihatan mewah banget. Pelanggan sering memuji seragam staff kami.' }
+];
+
+// Partner Logos Carousel
+const partners = [
+    'TELKOM INDONESIA', 'PERTAMINA', 'BANK MANDIRI', 'GOJEK', 'TOKOPEDIA', 'UNPAD', 'ITB', 'PLN', 'GARUDA INDONESIA', 'KAI'
+];
 ---
-<Layout title="Galeri & Testimoni - Konveksi Nusantara">
-    <div class="max-w-7xl mx-auto py-24 px-6">
-        <h1 class="font-serif text-5xl mb-12">Galeri & Testimoni Klien</h1>
+<Layout title="Galeri & Testimoni — Konveksi Nusantara">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <span class="text-xs uppercase tracking-widest text-luxury-800 font-semibold mb-3 block">Portofolio & Kepercayaan</span>
+            <h1 class="text-4xl sm:text-6xl font-serif mb-4">Galeri Hasil Produksi & 10 Ulasan Klien</h1>
+            <p class="text-luxury-800 font-light max-w-xl mx-auto">Bukti nyata dedikasi kami dalam menghadirkan konveksi berkualitas tinggi.</p>
+        </div>
+
+        <!-- Partner Logos Carousel Bar -->
+        <div class="mb-24 overflow-hidden py-8 bg-luxury-100 rounded-3xl border border-luxury-200">
+            <p class="text-center text-xs uppercase tracking-widest text-luxury-800 font-semibold mb-6">Telah Dipercaya Oleh Korporasi & Instansi Terkemuka</p>
+            <div class="flex space-x-12 animate-marquee whitespace-nowrap overflow-x-auto no-scrollbar px-6 items-center justify-between">
+                {partners.map(partner => (
+                    <span class="text-lg font-serif font-bold tracking-wider text-luxury-800 uppercase px-4">{partner}</span>
+                ))}
+            </div>
+        </div>
+
+        <!-- 10 Testimonials Grid -->
+        <div class="mb-20">
+            <h2 class="text-3xl font-serif mb-10 text-center">Apa Kata Klien Kami?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {testimonials.map((t, index) => (
+                    <div class="bg-white p-8 rounded-3xl border border-luxury-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+                        <div>
+                            <div class="flex items-center gap-1 text-amber-500 mb-4">
+                                {'★'.repeat(5)}
+                            </div>
+                            <p class="text-luxury-800 font-light text-sm leading-relaxed mb-6">"{t.text}"</p>
+                        </div>
+                        <div class="pt-4 border-t border-luxury-200">
+                            <h4 class="font-serif text-lg text-luxury-900">{t.name}</h4>
+                            <span class="text-xs text-luxury-800">{t.role}</span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     </div>
 </Layout>

@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Filament Admin Panel — Manajemen Konveksi">
+    <div class="max-w-7xl mx-auto px-6 py-12" x-data="{ tab: 'dashboard', orders: [ {id: '#ORD-9821', client: 'Bandung Streetwear', item: 'Varsity Jacket (500 pcs)', status: 'Proses Jahit', total: 'Rp 137.500.000'}, {id: '#ORD-9822', client: 'Universitas Padjadjaran', item: 'Jas Almamater (1.200 pcs)', status: 'Cutting', total: 'Rp 192.000.000'}, {id: '#ORD-9823', client: 'Logistics Corp', item: 'Seragam PDH (300 pcs)', status: 'Selesai', total: 'Rp 54.000.000'} ] }">
+        <!-- Filament Header -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between bg-luxury-900 text-white p-8 rounded-3xl mb-8 shadow-xl">
+            <div>
+                <span class="text-xs uppercase tracking-widest bg-white/10 px-3 py-1 rounded-full font-mono">Filament v3.2 Enterprise</span>
+                <h1 class="text-3xl font-serif mt-2">Konveksi Nusantara Admin Panel</h1>
+            </div>
+            <div class="mt-4 md:mt-0 flex items-center gap-3">
+                <span class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-full text-sm font-medium border border-emerald-500/30">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live Database Connected
+                </span>
+            </div>
+        </div>
+
+        <!-- Admin Nav Tabs -->
+        <div class="flex flex-wrap gap-3 mb-8 border-b border-luxury-200 pb-4">
+            <button @click="tab = 'dashboard'" :class="tab === 'dashboard' ? 'bg-luxury-900 text-white' : 'bg-white text-luxury-900 border border-luxury-200'" class="px-6 py-2.5 rounded-xl font-medium text-sm transition">Dashboard</button>
+            <button @click="tab = 'orders'" :class="tab === 'orders' ? 'bg-luxury-900 text-white' : 'bg-white text-luxury-900 border border-luxury-200'" class="px-6 py-2.5 rounded-xl font-medium text-sm transition">Manajemen Order</button>
+            <button @click="tab = 'catalog'" :class="tab === 'catalog' ? 'bg-luxury-900 text-white' : 'bg-white text-luxury-900 border border-luxury-200'" class="px-6 py-2.5 rounded-xl font-medium text-sm transition">Katalog (20 Produk)</button>
+        </div>
+
+        <!-- Dashboard Overview -->
+        <div x-show="tab === 'dashboard'" class="space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-luxury-200 shadow-sm">
+                    <span class="text-xs text-luxury-800 uppercase tracking-wider block mb-1">Total Pendapatan Bulan Ini</span>
+                    <div class="text-3xl font-serif">Rp 1.480.000.000</div>
+                    <span class="text-xs text-emerald-600 font-semibold mt-2 inline-block">+18.4% dari bulan lalu</span>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-luxury-200 shadow-sm">
+                    <span class="text-xs text-luxury-800 uppercase tracking-wider block mb-1">Order Aktif</span>
+                    <div class="text-3xl font-serif">42 Pesanan</div>
+                    <span class="text-xs text-indigo-600 font-semibold mt-2 inline-block">12 dalam tahap cutting</span>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-luxury-200 shadow-sm">
+                    <span class="text-xs text-luxury-800 uppercase tracking-wider block mb-1">Kapasitas Produksi</span>
+                    <div class="text-3xl font-serif">84%</div>
+                    <span class="text-xs text-amber-600 font-semibold mt-2 inline-block">Hampir penuh untuk batch ini</span>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-luxury-200 shadow-sm">
+                    <span class="text-xs text-luxury-800 uppercase tracking-wider block mb-1">Kepuasan Klien</span>
+                    <div class="text-3xl font-serif">4.9 / 5.0</div>
+                    <span class="text-xs text-emerald-600 font-semibold mt-2 inline-block">Dari 1.500+ ulasan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Management -->
+        <div x-show="tab === 'orders'" class="bg-white rounded-3xl border border-luxury-200 shadow-sm overflow-hidden p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-serif">Daftar Order Masuk (Filament Table)</h3>
+                <button class="px-4 py-2 bg-luxury-900 text-white rounded-xl text-xs font-semibold">+ Tambah Order Baru</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-luxury-100 border-b border-luxury-200 text-luxury-800 uppercase text-xs">
+                        <tr>
+                            <th class="p-4">ID Order</th>
+                            <th class="p-4">Klien / Brand</th>
+                            <th class="p-4">Produk & Qty</th>
+                            <th class="p-4">Status Produksi</th>
+                            <th class="p-4">Total Nilai</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-luxury-200">
+                        <template x-for="ord in orders">
+                            <tr>
+                                <td class="p-4 font-mono font-medium" x-text="ord.id"></td>
+                                <td class="p-4 font-semibold" x-text="ord.client"></td>
+                                <td class="p-4 text-luxury-800" x-text="ord.item"></td>
+                                <td class="p-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800" x-text="ord.status"></span></td>
+                                <td class="p-4 font-bold" x-text="ord.total"></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Catalog Management -->
+        <div x-show="tab === 'catalog'" class="bg-white rounded-3xl border border-luxury-200 shadow-sm p-6">
+            <h3 class="text-xl font-serif mb-4">Pengaturan Katalog Produk (20 Items Terdaftar)</h3>
+            <p class="text-luxury-800 text-sm mb-6">Seluruh 20 produk konveksi aktif disinkronkan secara otomatis ke halaman katalog publik.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 border border-luxury-200 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <h4 class="font-semibold">Jaket & Outerwear</h4>
+                        <span class="text-xs text-luxury-800">5 Produk aktif</span>
+                    </div>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-semibold">Synced</span>
+                </div>
+                <div class="p-4 border border-luxury-200 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <h4 class="font-semibold">Seragam & PDH</h4>
+                        <span class="text-xs text-luxury-800">6 Produk aktif</span>
+                    </div>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-semibold">Synced</span>
+                </div>
+                <div class="p-4 border border-luxury-200 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <h4 class="font-semibold">Kaos & Polo</h4>
+                        <span class="text-xs text-luxury-800">5 Produk aktif</span>
+                    </div>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-semibold">Synced</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
