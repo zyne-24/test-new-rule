@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Katalog Produk - Konveksi Nusantara">
+    <div class="max-w-7xl mx-auto py-24 px-6">
+        <h1 class="font-serif text-5xl mb-12">Katalog 20+ Produk</h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {Array.from({length: 20}).map((_, i) => (
+                <div class="bg-neutral-100 p-6 rounded-xl">Produk #{i+1}</div>
+            ))}
+        </div>
+    </div>
+</Layout>

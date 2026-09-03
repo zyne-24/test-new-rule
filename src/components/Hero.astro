@@ -1,0 +1,83 @@
+---
+---
+<section class="relative min-h-[90vh] flex flex-col justify-center bg-[#faf9f6] px-6 py-12 overflow-hidden" x-data="{
+    activeSlide: 0,
+    typedText: '',
+    slides: [
+        { title: 'jaket custom mewah?', desc: 'Eksklusif dengan bahan waterproof pilihan & jahitan presisi.', img: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=900' },
+        { title: 'hoodie & sweater premium?', desc: 'Kenyamanan maksimal dengan cotton fleece tebal anti-bulu.', img: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=900' },
+        { title: 'seragam PDH eksekutif?', desc: 'Tampilan berwibawa dan elegan untuk korporat & instansi.', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=900' },
+        { title: 'kaos sablon high-end?', desc: 'Cotton combed 24s reactive dengan cetak plastisol & DTF tajam.', img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=900' },
+        { title: 'jas almamater universitas?', desc: 'Simbol kebanggaan kampus dengan furing penuh berkualitas tinggi.', img: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=900' }
+    ],
+    async typeText(text) {
+        while (this.typedText.length > 0) {
+            this.typedText = this.typedText.slice(0, -1);
+            await new Promise(r => setTimeout(r, 30));
+        }
+        for (let i = 0; i < text.length; i++) {
+            this.typedText += text.charAt(i);
+            await new Promise(r => setTimeout(r, 50));
+        }
+    },
+    init() {
+        this.typedText = this.slides[0].title;
+        setInterval(async () => {
+            this.activeSlide = (this.activeSlide + 1) % this.slides.length;
+            await this.typeText(this.slides[this.activeSlide].title);
+        }, 3200);
+    }
+}">
+    <!-- Background Luxury Glow Elements -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neutral-300/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center py-12">
+        <div class="lg:col-span-6 flex flex-col items-start text-left">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-neutral-200/70 border border-neutral-300 text-xs font-semibold tracking-wider text-neutral-800 mb-6 uppercase">
+                <span class="w-2 h-2 rounded-full bg-amber-600 animate-ping"></span>
+                <span>Manufaktur Garment Kelas Dunia</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-neutral-900 mb-6 leading-[1.1]">
+                Pengen mau buat <br />
+                <span class="font-serif italic text-amber-900 font-normal">
+                    <span x-text="typedText"></span><span class="inline-block w-[3px] h-[0.85em] bg-neutral-900 ml-1 align-middle" style="animation: blink 0.8s infinite;"></span>
+                </span>
+            </h1>
+
+            <style>
+                @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+            </style>
+
+            <p class="max-w-xl text-lg text-neutral-600 font-light mb-10 leading-relaxed" x-text="slides[activeSlide].desc">
+                Wujudkan standar pakaian impian Anda bersama pabrik konveksi mewah bersertifikasi internasional.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                <a href="/katalog" class="w-full sm:w-auto px-8 py-4 rounded-full bg-neutral-900 text-white font-medium text-sm tracking-wide hover:bg-neutral-800 transition-all text-center shadow-lg hover:shadow-xl">
+                    Jelajahi 20+ Katalog Produk
+                </a>
+                <a href="/about" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white border border-neutral-300 text-neutral-900 font-medium text-sm tracking-wide hover:bg-neutral-100 transition-all text-center">
+                    Tentang Perusahaan
+                </a>
+            </div>
+        </div>
+
+        <!-- Carousel Apparel Image with Blur Side Gradients -->
+        <div class="lg:col-span-6 relative flex items-center justify-center">
+            <div class="absolute left-0 inset-y-0 w-24 bg-gradient-to-r from-[#faf9f6] via-[#faf9f6]/80 to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 inset-y-0 w-24 bg-gradient-to-l from-[#faf9f6] via-[#faf9f6]/80 to-transparent z-10 pointer-events-none"></div>
+
+            <div class="w-full overflow-hidden relative py-6">
+                <div class="flex transition-transform duration-700 ease-in-out items-center" :style="`transform: translateX(-${activeSlide * 100}%)`">
+                    <template x-for="(slide, index) in slides" :key="index">
+                        <div class="w-full flex-shrink-0 flex items-center justify-center px-8 animate-float">
+                            <img :src="slide.img" :alt="slide.title" class="max-h-[420px] w-auto object-contain drop-shadow-2xl mix-blend-multiply" />
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
